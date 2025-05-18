@@ -1,9 +1,9 @@
 #include "Game.hpp"
 
-int main(int argc, char const *argv[])
+int main()
 {
 
-    TheGame::Instance()->Init("HearBund", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
+    TheGame::Instance()->Init("HearBund", 640, 480, 0);
 
     while (TheGame::Instance()->running())
     {

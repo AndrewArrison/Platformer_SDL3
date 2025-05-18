@@ -1,0 +1,68 @@
+    int tilemap[20][15];
+    SDL_FRect s_t_1;
+    SDL_FRect s_t_2;
+    SDL_FRect s_t_3;
+    SDL_FRect s_t_4;
+	SDL_FRect tile[20][15];
+
+
+for(int x=0 ; x < 20; x++)
+	{
+		for(int y = 0; y < 15; y++)
+		{
+			tilemap[x][y] = rand() %4 + 1;
+		}
+	}
+    for(int x = 0; x < 20; x++)
+	{
+		for(int y = 0; y < 15; y++)
+		{
+            tile[x][y].x = x*32;
+            tile[x][y].y = y*32;
+            tile[x][y].w = 32;
+            tile[x][y].h = 32;
+		}
+	}
+	s_t_1.x = 0;
+	s_t_1.y = 0;
+	s_t_1.w = 32;
+	s_t_1.h = 32;
+
+	s_t_2.x = 32;
+	s_t_2.y = 0;
+	s_t_2.w = 32;
+	s_t_2.h = 32;
+
+	s_t_3.x = 0;
+	s_t_3.y = 32;
+	s_t_3.w = 32;
+	s_t_3.h = 32;
+
+	s_t_4.x = 32;
+	s_t_4.y = 32;
+	s_t_4.w = 32;
+	s_t_4.h = 32;
+
+
+
+        for(int x = 0; x < 20; x++)
+	{
+		for(int y = 10; y < 15; y++)
+		{
+			switch(tilemap[x][y])
+			{
+				case 1:
+				    SDL_RenderTexture(m_pRenderer, TheTextureManager::instance()->getTexture("testTexture"), &s_t_1, &tile[x][y]);
+                    break;
+				case 2:
+				    SDL_RenderTexture(m_pRenderer, TheTextureManager::instance()->getTexture("testTexture"), &s_t_2, &tile[x][y]);
+                    break;
+    			case 3:
+				    SDL_RenderTexture(m_pRenderer, TheTextureManager::instance()->getTexture("testTexture"), &s_t_3, &tile[x][y]);
+                    break;
+				case 4:
+				    SDL_RenderTexture(m_pRenderer, TheTextureManager::instance()->getTexture("testTexture"), &s_t_4, &tile[x][y]);
+                    break;
+            }
+		}
+	}

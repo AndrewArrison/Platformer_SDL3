@@ -1,9 +1,7 @@
 #pragma once
-#include <vector>
 #include <SDL3/SDL.h>
-#include "TextureManager.hpp"
-#include "PhysicsEntity.hpp"
 #include "Player.hpp"
+#include "TileMap.hpp"
 
 class Game
 {
@@ -19,7 +17,7 @@ public:
     }
     ~Game() {}
 
-    bool Init(const char* title, int xPos, int yPos, int width, int height, int flags);
+    bool Init(const char* title, int width, int height, int flags);
     void Update();
     void Render();
     void HandleEvents();
@@ -34,6 +32,7 @@ private:
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
     Player* player;
-    bool m_bRunning;
+	TileMap* tile;
+	bool m_bRunning;
 };
 typedef Game TheGame;

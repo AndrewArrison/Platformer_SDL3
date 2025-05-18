@@ -5,14 +5,14 @@ LIB_DIR = E:/main/plsc/mingw32/lib
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -g -std=c++20 -I$(INCLUDE_DIR)
+CXXFLAGS = -Wall -Wextra -Wunused -g -std=c++23 -I$(INCLUDE_DIR)
 LDFLAGS = -L$(LIB_DIR) -lmingw32 -lSDL3_image -lSDL3 $(LIB_DIR)/libSDL3.a
 
 # Folders
 SRC_DIR = src
 OBJ_DIR = obj/Debug
 BIN_DIR = build/Debug
-TARGET = $(BIN_DIR)/SDL3Game.exe
+TARGET = $(BIN_DIR)/Game.exe
 
 # Source and object files
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
@@ -20,6 +20,8 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
 # Default target
 all: $(TARGET)
+
+TOTAL := $(words $(SRCS))
 
 # Linking
 $(TARGET): $(OBJS)

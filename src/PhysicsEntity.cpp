@@ -1,4 +1,5 @@
 #include "PhysicsEntity.hpp"
+#include "TextureManager.hpp"
 
 PhysicsEntity::PhysicsEntity(const LoaderParams *pParams)
 {

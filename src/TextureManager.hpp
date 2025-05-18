@@ -1,8 +1,8 @@
 #pragma once
-#include <iostream>
 #include <map>
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
+#include <string>
 
 class TextureManager
 {
@@ -50,7 +50,9 @@ public:
     /// @param flip 
     void drawFrame(std::string id, float x, float y, float width, float height,
                  int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_FlipMode flip = SDL_FLIP_NONE);
-    /// @brief Clear the textures attached to the renderer on the current instance
+ 
+	SDL_Texture* getTexture(std::string id);
+	/// @brief Clear the textures attached to the renderer on the current instance
     void clean();
 
     

@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include "TextureManager.hpp"
 #include "LoaderParams.hpp"
 
 class PhysicsEntity

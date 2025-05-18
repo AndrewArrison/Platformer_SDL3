@@ -3,3 +3,5 @@ obj/
 .vscode/
 *.bat
 *.py
+.clangd
+

@@ -12,9 +12,9 @@ bool TextureManager::load(std::string filename, std::string id, SDL_Renderer *pR
         SDL_Log("Error loading image : %s %s \n", filename.c_str() , SDL_GetError());
         return false;
     }
-    
     SDL_Texture* pTexture = nullptr;
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+    SDL_SetTextureScaleMode(pTexture, SDL_SCALEMODE_NEAREST);
     if (!pTexture)
     {
         SDL_Log("Error creating texture from surface : %s \n", SDL_GetError());
@@ -50,10 +50,19 @@ void TextureManager::drawFrame(std::string id, float x, float y, float width, fl
     srcRect.y = height * (currentRow - 1);
     srcRect.w = destRect.w = width;
     srcRect.h = destRect.h = height;
-    destRect.x = x;
-    destRect.y = y;
+	//   	srcRect.w = width;
+	// srcRect.h = height;
+	// destRect.w = width * 2;
+	// destRect.h = height * 2;
+	destRect.x = x; 
+	destRect.y = y;
 
     SDL_RenderTextureRotated(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+}
+
+SDL_Texture* TextureManager::getTexture(std::string id)
+{
+	return m_textureMap[id];
 }
 
 void TextureManager::clean()
