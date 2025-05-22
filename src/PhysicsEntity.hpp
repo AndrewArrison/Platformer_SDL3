@@ -10,7 +10,8 @@ public:
     virtual void update();
     void draw(SDL_Renderer* pRenderer);
     void clean() { }
-
+	float getX() { return m_x; }
+	float getY() { return m_y; }
 protected:
     float m_x;
     float m_y;

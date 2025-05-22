@@ -1,13 +1,13 @@
 #include "Game.hpp"
 #include "TextureManager.hpp"
 #include "TileMap.hpp"
+#include <cmath>
 
 Game* Game::s_pInstance = nullptr;
 
 bool Game::Init(const char *title, int width, int height, int flags)
 {
-	tile = new TileMap();
-	tile->load();
+	SDL_Log("Compiled %d.%d", SDL_VERSIONNUM_MAJOR(SDL_VERSION), SDL_VERSIONNUM_MINOR(SDL_VERSION));
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("Error initalizing SDL_VIDEO : %s \n", SDL_GetError());
@@ -20,15 +20,20 @@ bool Game::Init(const char *title, int width, int height, int flags)
         return false;
     }
 
-    if(!TheTextureManager::instance()->load("test.png", "testTexture", m_pRenderer))
+    if(!TheTextureManager::instance()->load("Solider.png", "testTexture", m_pRenderer))
     {
         return false;
     }
-	SDL_Log("Window Ready");
-    LoaderParams* params = new LoaderParams(100, 100, 32, 32, "testTexture");
-    
-	player = new Player(params);
-    m_bRunning = true;
+    if(!TheTextureManager::instance()->load("tilemap.png", "tilemap", m_pRenderer))
+    {
+        return false;
+	}
+	SDL_Log("Window initialized");
+    LoaderParams* params = new LoaderParams(320, 320, 32, 32, "tilemap");
+	tile = new TileMap();
+	tile->load();
+	player = new Player(params, tile);
+	m_bRunning = true;
 	return true;
 }
 
@@ -39,7 +44,7 @@ void Game::Update()
 
 void Game::Render()
 {
-    SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 225);
+    SDL_SetRenderDrawColor(m_pRenderer, 21, 25, 10, 225);
     SDL_RenderClear(m_pRenderer);
     tile->draw(m_pRenderer);
 	player->draw(m_pRenderer);

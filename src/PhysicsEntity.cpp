@@ -21,5 +21,7 @@ void PhysicsEntity::update()
 void PhysicsEntity::draw(SDL_Renderer* pRenderer)
 {
     TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
-
+	// SDL_FRect recta = { m_x, m_y, 32.0f, 32.0f};
+    // SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 225);
+	// SDL_RenderFillRect(pRenderer, &recta);
 }
