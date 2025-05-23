@@ -7,7 +7,6 @@ class Player : public PhysicsEntity
 {
 public:
     Player(const LoaderParams* pParams, TileMap* tilemap);
-	void moveAxis(Vector2D pos);
     void handleInput();
     void update();
 	
@@ -18,4 +17,8 @@ private:
     bool m_onGround;
 	TileMap* m_tilemap;
 	Vector2D PlayerPos;
+
+
+	float newPlayerX;
+	float newPlayerY;
 };

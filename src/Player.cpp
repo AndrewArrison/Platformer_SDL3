@@ -37,10 +37,6 @@ void Player::handleInput()
 }
 
 
-void Player::moveAxis(Vector2D pos)
-{
-}
-
 void Player::update()
 {
     handleInput();
@@ -57,9 +53,9 @@ void Player::update()
 	// 	m_onGround = true;
 	// }
 	//
-	float newPlayerX = 0;
-	float newPlayerY = 0;
-	//x
+	newPlayerX = 0;
+	newPlayerY = 0;
+	//Resolve on X
 	newPlayerX = m_x + m_velocityX;
 	std::vector<Vector2D> tile_list = m_tilemap->getRects(newPlayerX, m_y);
 	for (Vector2D tile : tile_list) {
@@ -69,18 +65,17 @@ void Player::update()
 			newPlayerX = tile.x + 32.0001;
 		}
 	}
+	//Resolve on Y
 	newPlayerY = m_y + m_velocityY;
 	tile_list = m_tilemap->getRects(newPlayerX, newPlayerY);
 	for (Vector2D tile : tile_list) {
 		if (m_velocityY > 0) {
 			newPlayerY = tile.y - 32.0001;
 		} else if (m_velocityY < 0) {
-			newPlayerY = tile.y + 33.0001;
+			newPlayerY = tile.y + 32.0001;
 		}
 	}
-
-	
-
+	//move
 	m_y = newPlayerY; 
 	m_x = newPlayerX;
 }
