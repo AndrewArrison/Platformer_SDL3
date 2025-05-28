@@ -1,14 +1,14 @@
 #include "Player.hpp"
 #include "TileMap.hpp"
 #include <SDL3/SDL.h>
-#include <vector>
-#include "vector.hpp"
+// #include "vector.hpp"
+#include "TextureManager.hpp"
 
 Player::Player(const LoaderParams* pParams, TileMap* tilemap)
     : PhysicsEntity(pParams), m_velocityX(0), m_velocityY(0), m_accelerationY(0.5f), m_onGround(false), m_tilemap(tilemap)
 {
-	m_currentFrame = 2;
-	m_currenRow = 3;
+	m_currentFrame = 1;
+	m_currenRow = 1;
 }
 
 void Player::handleInput()
@@ -16,7 +16,7 @@ void Player::handleInput()
     const bool* keystates = SDL_GetKeyboardState(nullptr);
 
     m_velocityX = 0;
-	m_velocityY = 0;
+	// m_velocityY = 0;
     if (keystates[SDL_SCANCODE_A]) {
         m_velocityX = -3.0f;
     }
@@ -31,8 +31,8 @@ void Player::handleInput()
 	}
 
     if (keystates[SDL_SCANCODE_SPACE] && m_onGround) {
-        // m_velocityY = -10.0f;
-        // m_onGround = false;
+        m_velocityY = -11.0f;
+        m_onGround = false;
     }
 }
 
@@ -42,40 +42,53 @@ void Player::update()
     handleInput();
 
     // Gravity
-	//    // m_velocityY += _accelerationY;
-	// m_velocityY = std::min(10.0f, (m_velocityY + m_accelerationY));
-	//    m_x += m_velocityX;
-	//    m_y += m_velocityY;
-	//
-	// if (m_y + 32 > 384) {
-	// 	m_y = 384 - 32;
-	// 	m_velocityY = 0;
-	// 	m_onGround = true;
-	// }
-	//
+	m_velocityY += m_accelerationY;
+	if (m_velocityY > 10) {
+		m_velocityY = 10;
+	}
+
 	newPlayerX = 0;
 	newPlayerY = 0;
 	//Resolve on X
 	newPlayerX = m_x + m_velocityX;
-	std::vector<Vector2D> tile_list = m_tilemap->getRects(newPlayerX, m_y);
-	for (Vector2D tile : tile_list) {
-		if (m_velocityX > 0) {
-			newPlayerX = tile.x - 32.0001;
-		} else if (m_velocityX < 0) {
-			newPlayerX = tile.x + 32.0001;
-		}
-	}
+	moveAxis(true);
 	//Resolve on Y
 	newPlayerY = m_y + m_velocityY;
-	tile_list = m_tilemap->getRects(newPlayerX, newPlayerY);
-	for (Vector2D tile : tile_list) {
-		if (m_velocityY > 0) {
-			newPlayerY = tile.y - 32.0001;
-		} else if (m_velocityY < 0) {
-			newPlayerY = tile.y + 32.0001;
-		}
-	}
-	//move
+	moveAxis(false);
 	m_y = newPlayerY; 
 	m_x = newPlayerX;
+}
+
+void Player::moveAxis(bool is_x)
+{
+	if (is_x) {
+		m_tile_list = m_tilemap->getRects(newPlayerX, m_y);
+		for (Vector2D &tile : m_tile_list) {
+			if (m_velocityX > 0) {
+				newPlayerX = tile.x - 32.0001;
+				m_velocityX = 0;
+			} else if (m_velocityX < 0) {
+				newPlayerX = tile.x + 32.0001;
+				m_velocityX = 0;
+			}
+		}
+	}
+	else {
+		m_tile_list = m_tilemap->getRects(newPlayerX, newPlayerY);
+		for (Vector2D &tile : m_tile_list) {
+			if (m_velocityY > 0) {
+				newPlayerY = tile.y - 32.0001;
+				m_velocityY = 0;
+				m_onGround = true;
+			} else if (m_velocityY < 0) {
+				newPlayerY = tile.y + 32.0001;
+				m_velocityY = 0;
+			}
+		}
+	}
+}
+
+void Player::draw(SDL_Renderer* pRenderer)
+{
+    TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
 }
