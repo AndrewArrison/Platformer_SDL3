@@ -20,7 +20,7 @@ bool Game::Init(const char *title, int width, int height, int flags)
         return false;
     }
 
-    if(!TheTextureManager::instance()->load("SS.png", "test", m_pRenderer))
+    if(!TheTextureManager::instance()->load("SS1.png", "test", m_pRenderer))
     {
         return false;
     }
@@ -96,7 +96,10 @@ void Game::Clean()
         SDL_DestroyRenderer(m_pRenderer);
         SDL_Log("Destroy renderer. \n");
     }
-	delete player;
+	if (player != nullptr) {
+		delete player;
+		SDL_Log("plaer done");
+	}
     delete tile;
 	TheTextureManager::instance()->clean();
 	SDL_Quit();

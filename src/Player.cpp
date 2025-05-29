@@ -1,7 +1,10 @@
 #include "Player.hpp"
 #include "TileMap.hpp"
 #include <SDL3/SDL.h>
+#include <cmath>
+#include <vector>
 #include "TextureManager.hpp"
+#include "vector.hpp"
 
 Player::Player(const LoaderParams* pParams, TileMap* tilemap)
     : PhysicsEntity(pParams), m_velocityX(0), m_velocityY(0), m_accelerationY(0.5f), m_onGround(false), m_tilemap(tilemap)
@@ -60,10 +63,33 @@ void Player::update()
 	m_x = newPlayerX;
 }
 
+std::vector<Vector2D> Player::getRects(float Px, float Py)
+{
+	int leftTile = std::floor( Px/ 32);
+	int rightTile = leftTile + 1;
+	int topTile = std::floor(Py / 32);
+	int bottomTile = topTile + 1;
+
+	std::vector<Vector2D> data;
+	if (Px < 0 || Px > 20 * 32 || Py > 15 * 32 || Py < 0){
+		return data;
+	}
+	for (int y = topTile; y <= bottomTile; y++) {
+		for (int x = leftTile; x <= rightTile; x++) {
+			if (m_tilemap->getTile(x, y) == 1) {
+				float tileX = x*32.0f;
+				float tileY = y*32.0f;
+				data.push_back({tileX, tileY});
+			}
+		}
+	}
+	return data;
+}
+
 void Player::moveAxis(bool is_x)
 {
 	if (is_x) {
-		m_tile_list = m_tilemap->getRects(newPlayerX, m_y);
+		m_tile_list = getRects(newPlayerX, m_y);
 		for (Vector2D &tile : m_tile_list) {
 			if (m_velocityX > 0) {
 				newPlayerX = tile.x - 32.0001;
@@ -75,7 +101,7 @@ void Player::moveAxis(bool is_x)
 		}
 	}
 	else {
-		m_tile_list = m_tilemap->getRects(newPlayerX, newPlayerY);
+		m_tile_list = getRects(newPlayerX, newPlayerY);
 		for (Vector2D &tile : m_tile_list) {
 			if (m_velocityY > 0) {
 				newPlayerY = tile.y - 32.0001;
@@ -87,6 +113,7 @@ void Player::moveAxis(bool is_x)
 			}
 		}
 	}
+
 }
 
 void Player::draw(SDL_Renderer* pRenderer)
@@ -96,5 +123,4 @@ void Player::draw(SDL_Renderer* pRenderer)
 	} else {
     	TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
 	}
-    // TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
 }

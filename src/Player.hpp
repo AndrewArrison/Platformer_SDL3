@@ -2,6 +2,7 @@
 #include "PhysicsEntity.hpp"
 #include "TileMap.hpp"
 #include "vector.hpp"
+#include <vector>
 
 class Player : public PhysicsEntity
 {
@@ -11,6 +12,7 @@ public:
     void update();
     void draw(SDL_Renderer* pRenderer);
 	void moveAxis(bool is_x);
+	std::vector<Vector2D> getRects(float Px, float Py);
 private:
     float m_velocityX;
     float m_velocityY;
