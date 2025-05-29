@@ -16,9 +16,9 @@ private:
     float m_velocityY;
     float m_accelerationY;
     bool m_onGround;
+	bool fliped = false;
 	TileMap* m_tilemap;
 	std::vector<Vector2D> m_tile_list; 
 	float newPlayerX;
 	float newPlayerY;
-
 };

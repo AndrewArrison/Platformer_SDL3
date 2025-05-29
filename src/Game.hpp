@@ -31,8 +31,8 @@ private:
     static Game* s_pInstance;
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
-    Player* player;
 	TileMap* tile;
+    Player* player;
 	bool m_bRunning;
 };
 typedef Game TheGame;

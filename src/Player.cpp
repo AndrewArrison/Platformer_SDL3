@@ -1,7 +1,6 @@
 #include "Player.hpp"
 #include "TileMap.hpp"
 #include <SDL3/SDL.h>
-// #include "vector.hpp"
 #include "TextureManager.hpp"
 
 Player::Player(const LoaderParams* pParams, TileMap* tilemap)
@@ -18,9 +17,11 @@ void Player::handleInput()
     m_velocityX = 0;
 	// m_velocityY = 0;
     if (keystates[SDL_SCANCODE_A]) {
+		fliped = true;
         m_velocityX = -3.0f;
     }
     if (keystates[SDL_SCANCODE_D]) {
+		fliped = false;
         m_velocityX = 3.0f;
     }
 	if (keystates[SDL_SCANCODE_W]) {
@@ -90,5 +91,10 @@ void Player::moveAxis(bool is_x)
 
 void Player::draw(SDL_Renderer* pRenderer)
 {
-    TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
+	if (fliped) {
+    	TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer, SDL_FLIP_HORIZONTAL);
+	} else {
+    	TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
+	}
+    // TheTextureManager::instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currenRow, m_currentFrame, pRenderer);
 }

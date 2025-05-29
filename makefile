@@ -5,7 +5,7 @@ LIB_DIR = E:/main/plsc/mingw32/lib
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Wunused -g -std=c++23 -I$(INCLUDE_DIR)
+CXXFLAGS = -Wall -Wextra -Wunused -Wpedantic -Werror -Wuninitialized -g -std=c++23 -I$(INCLUDE_DIR)
 LDFLAGS = -L$(LIB_DIR) -lmingw32 -lSDL3_image -lSDL3 $(LIB_DIR)/libSDL3.a
 
 # Folders
