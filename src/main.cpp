@@ -3,7 +3,7 @@
 int main()
 {
 
-    TheGame::Instance()->Init("HearBund", 640, 480, 0);
+    TheGame::Instance()->Init("Platformer", 640, 480, 0);
 
     while (TheGame::Instance()->running())
     {

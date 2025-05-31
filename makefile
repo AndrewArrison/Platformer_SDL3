@@ -21,8 +21,6 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 # Default target
 all: $(TARGET)
 
-TOTAL := $(words $(SRCS))
-
 # Linking
 $(TARGET): $(OBJS)
 	# @echo Linking...
@@ -47,8 +45,7 @@ $(TARGET): | $(BIN_DIR)
 
 # Clean
 clean:
-	# @echo Cleaning...
-	del obj/Debug/main.o
-	del /q $(TARGET)
+	@echo "OK"
+	-rm obj/debug/*
 
 .PHONY: all clean

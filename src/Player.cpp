@@ -61,6 +61,7 @@ void Player::update()
 	moveAxis(false);
 	m_y = newPlayerY; 
 	m_x = newPlayerX;
+	m_currentFrame = 1 + ((SDL_GetTicks() / 100) % (6 - 1));
 }
 
 std::vector<Vector2D> Player::getRects(float Px, float Py)
@@ -80,6 +81,8 @@ std::vector<Vector2D> Player::getRects(float Px, float Py)
 				float tileX = x*32.0f;
 				float tileY = y*32.0f;
 				data.push_back({tileX, tileY});
+			} else if (m_tilemap->getTile(x, y) == 2) {
+				m_tilemap->setTile(x, y, 0);
 			}
 		}
 	}

@@ -44,7 +44,7 @@ void TileMap::draw(SDL_Renderer* pRenderer)
 		for (int y = 0; y < 15; y++) {
 			switch (tilemap[x][y]) {
 				case 1:
-					TheTextureManager::instance()->drawFrame("test", tile[x][y].x, tile[x][y].y, 32, 32, 2, 1, pRenderer);
+					TheTextureManager::instance()->drawFrame("test", tile[x][y].x, tile[x][y].y, 32, 32, 2, 3, pRenderer);
 				break;
 				case 2:
 					TheTextureManager::instance()->drawFrame("test", tile[x][y].x, tile[x][y].y, 32, 32, 2, 2, pRenderer);

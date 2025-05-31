@@ -14,13 +14,13 @@ bool TextureManager::load(std::string filename, std::string id, SDL_Renderer *pR
     }
     SDL_Texture* pTexture = nullptr;
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+    SDL_DestroySurface(pTempSurface);
     SDL_SetTextureScaleMode(pTexture, SDL_SCALEMODE_NEAREST);
     if (!pTexture)
     {
         SDL_Log("Error creating texture from surface : %s \n", SDL_GetError());
         return false;
     }
-    SDL_DestroySurface(pTempSurface);
 
     m_textureMap[id] = pTexture;
     SDL_Log("Texture Loaded : %s", filename.c_str());
@@ -50,10 +50,6 @@ void TextureManager::drawFrame(std::string id, float x, float y, float width, fl
     srcRect.y = height * (currentRow - 1);
     srcRect.w = destRect.w = width;
     srcRect.h = destRect.h = height;
-	//   	srcRect.w = width;
-	// srcRect.h = height;
-	// destRect.w = width * 2;
-	// destRect.h = height * 2;
 	destRect.x = x; 
 	destRect.y = y;
 

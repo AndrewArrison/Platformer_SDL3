@@ -20,7 +20,7 @@ bool Game::Init(const char *title, int width, int height, int flags)
         return false;
     }
 
-    if(!TheTextureManager::instance()->load("SS1.png", "test", m_pRenderer))
+    if(!TheTextureManager::instance()->load("SS.png", "test", m_pRenderer))
     {
         return false;
     }
@@ -29,6 +29,7 @@ bool Game::Init(const char *title, int width, int height, int flags)
 	tile = new TileMap();
 	tile->load();
 	player = new Player(params, tile);
+	delete params;
 	m_bRunning = true;
 	return true;
 }
@@ -37,19 +38,13 @@ void Game::Update()
 {
     player->update();
 }
-int r = 10;
-int g = 10;
-int b = 10;
 
 void Game::Render()
 {
-    SDL_SetRenderDrawColor(m_pRenderer, r, 165, 193, 225);
+    SDL_SetRenderDrawColor(m_pRenderer, 75, 72, 50, 225);
     SDL_RenderClear(m_pRenderer);
     tile->draw(m_pRenderer);
-	// player->draw(m_pRenderer);
 	player->draw(m_pRenderer);
-	// SDL_SetTextureScaleMode(TheTextureManager::instance()->getTexture("testTexture"), SDL_SCALEMODE_NEAREST);
-    // TheTextureManager::instance()->draw("testTexture", 400, 400, 100, 100, m_pRenderer);
 	SDL_RenderPresent(m_pRenderer);
 }
 
@@ -67,11 +62,8 @@ void Game::HandleEvents()
             case SDL_EVENT_KEY_DOWN:
                 switch (event.key.scancode)
                 {
-                    case SDL_SCANCODE_R:
-						r += 20;
-						break;
-					case SDL_SCANCODE_F:
-						r--;
+					case SDL_SCANCODE_ESCAPE:
+						m_bRunning = false;
 						break;
 					default:
                         break;
@@ -96,9 +88,8 @@ void Game::Clean()
         SDL_DestroyRenderer(m_pRenderer);
         SDL_Log("Destroy renderer. \n");
     }
-	if (player != nullptr) {
+	if (player) {
 		delete player;
-		SDL_Log("plaer done");
 	}
     delete tile;
 	TheTextureManager::instance()->clean();
